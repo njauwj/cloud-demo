@@ -8,15 +8,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/order")
 public class OrderController {
 
-   @Autowired
-   private OrderService orderService;
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/{orderId}")
-    public Order queryOrderByUserId(@PathVariable("orderId") Long orderId) {
+    public Order queryOrderByUserId(@PathVariable("orderId") Long orderId, HttpServletRequest request) {
+        System.out.println(request.getHeader("order_header"));
+        System.out.println(request.getHeader("default_header"));
+        System.out.println(request.getHeader("user_header"));
         // 根据id查询订单并返回
         return orderService.queryOrderById(orderId);
     }
